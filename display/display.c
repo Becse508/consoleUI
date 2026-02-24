@@ -22,30 +22,45 @@ size_t get_buffer_index(int x, int y) {
     return y * sizex + x;
 }
 
-
-void place_surface(surface *surf, point pos) {
+// no idea if this makes ts faster
+void place_surface(surface *surf, point pos)
+{
     if (!surf) return;
 
-    for (size_t y = 0; y < surf->size.y; y++)
-    {
-        for (size_t x = 0; x < surf->size.x; x++)
-        {
-            size_t idx = get_buffer_index(pos.x + x, pos.y + y);
-            if (idx == SIZE_MAX) continue;
+    int start_x = pos.x;
+    int start_y = pos.y;
 
-            CHAR_INFO pixel = surface_get_pixel(surf, x, y);
-            if (pixel.Char.UnicodeChar != 0) {
-                buffer[idx] = pixel;
-            }
+    int end_x = start_x + surf->size.x;
+    int end_y = start_y + surf->size.y;
+
+    if (end_x <= 0 || end_y <= 0 || start_x >= sizex || start_y >= sizey)
+        return;
+
+    int src_x0 = start_x < 0 ? -start_x : 0;
+    int src_y0 = start_y < 0 ? -start_y : 0;
+
+    int src_x1 = end_x > sizex ? sizex - start_x : surf->size.x;
+    int src_y1 = end_y > sizey ? sizey - start_y : surf->size.y;
+
+    for (int y = src_y0; y < src_y1; y++)
+    {
+        CHAR_INFO *src_row = &surf->texture[y * surf->size.x];
+        CHAR_INFO *dst_row = &buffer[(start_y + y) * sizex];
+
+        for (int x = src_x0; x < src_x1; x++)
+        {
+            CHAR_INFO pixel = src_row[x];
+            if (pixel.Char.UnicodeChar != 0)
+                dst_row[start_x + x] = pixel;
         }
     }
 }
+
 void place_element(element *elem) {
     if (!(elem->flags & ELEMENT_DONT_USE_STYLE)) {
         element_update_style(elem);
         place_surface(elem->style.surf, elem->pos);
     }
-    
     
     if (elem->flags & ELEMENT_RENDER_ALL_SURFACES) {
         // funny loop

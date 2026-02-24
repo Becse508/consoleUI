@@ -1,6 +1,5 @@
 #include "surface.h"
 #include <stdlib.h>
-#include "../collections/vector.h"
 
 #define check_out_of_bounds(surf, x, y) \
     ((x) < 0 || (y) < 0 ||              \

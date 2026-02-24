@@ -23,11 +23,14 @@ void element_update_style(element *elem) {
         free(elem->style.surf);
         elem->style.surf = surface_create(active_surface_ptr(elem)->size);
     }
-
-    if (has_style_changed(elem) == 0) return;
+    else if (has_style_changed(elem) == 0) // only return if neither changed
+        return;
 
     elem->__old_style = elem->style;
 
+    if (elem->style.fill_char.Char.UnicodeChar) {
+        surface_fill(elem->style.surf, elem->style.fill_char);
+    }
     if (!border_is_empty(&elem->style.border)) {
         draw_borders(elem->style.surf, elem->style.border);
     }

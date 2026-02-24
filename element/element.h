@@ -15,6 +15,7 @@ MAKE_PTRVECTOR(surface_ptr)
 
 typedef struct element_style {
     border_chars border;
+    CHAR_INFO fill_char;
     surface *surf;
 } element_style;
 
