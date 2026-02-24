@@ -4,4 +4,5 @@ i made this to learn C
 
 **ONLY SUPPORTS WINDOWS AT THE MOMENT**
 
-<img width="947" height="468" alt="demo" src="https://github.com/user-attachments/assets/d4a6acdb-45c9-4a9f-b9e4-1e62c8445f07" />
+
+<img width="947" height="468" alt="demo" src="https://github.com/user-attachments/assets/23a36d2f-74f6-4ab6-8cd5-4976ba899f4d" />
