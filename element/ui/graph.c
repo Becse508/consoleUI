@@ -127,8 +127,8 @@ void ui_graph_render(graph_data *grap, surface *surf, rect area, line_chars char
 
     float minx = grap->data[0].x;
     float maxx = grap->data[grap->count-1].x;
-    float dy = fabsf(grap->max - grap->min);
-    float dx = fabsf(minx - maxx);
+    float dy = grap->max - grap->min;
+    float dx = maxx - minx;
     if (dx == 0) dx = 1;
     if (dy == 0) dy = 1;
 
@@ -161,8 +161,8 @@ void ui_graph_render_braille(const graph_data *grap, surface *surf, rect area, i
 
     float minx = grap->data[0].x;
     float maxx = grap->data[grap->count-1].x;
-    float dy = fabsf(grap->max - grap->min);
-    float dx = fabsf(minx - maxx);
+    float dy = grap->max - grap->min;
+    float dx = maxx - minx;
     if (dx == 0) dx = 1;
     if (dy == 0) dy = 1;
 
@@ -193,8 +193,8 @@ void ui_graph_render_indicators(const graph_data *grap, surface *surf, point cou
 
     float minx = grap->data[0].x;
     float maxx = grap->data[grap->count-1].x;
-    float dy = fabsf(grap->max - grap->min);
-    float dx = fabsf(minx - maxx);
+    float dy = grap->max - grap->min;
+    float dx = minx - maxx;
 
     char buffer[6];
 

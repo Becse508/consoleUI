@@ -16,18 +16,14 @@ surface* surface_create(point size) {
     surface_init(surf, size);
     return surf;
 }
-
-size_t surface_get_index(point size, int x, int y) {
-    return y * size.x + x;
-}
 CHAR_INFO surface_get_pixel(const surface *surf, int x, int y) {
-    return surf->texture[surface_get_index(surf->size, x, y)];
+    return surf->texture[surface_get_index(surf->size.x, x, y)];
 }
 int surface_set_pixel(surface *surf, int x, int y, CHAR_INFO value) {
     if (check_out_of_bounds(surf, x, y))
         return 1;
 
-    surf->texture[surface_get_index(surf->size, x, y)] = value;
+    surf->texture[surface_get_index(surf->size.x, x, y)] = value;
     return 0;
 }
 

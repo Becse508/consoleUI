@@ -1,11 +1,13 @@
 #include "display.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "timer.h"
 
 static CHAR_INFO *buffer = 0;
 list elements = {0};
 int sizex;
 int sizey;
+timer_t timer;
 
 /// @return Internal element list. Use it to append elements.
 list *display_init(int size_x, int size_y) {
@@ -15,6 +17,8 @@ list *display_init(int size_x, int size_y) {
     sizey = size_y;
     buffer = malloc(sizeof(CHAR_INFO) * sizex * sizey);
     return &elements;
+    timer_init();
+    timer_start(&timer);
 }
 
 size_t get_buffer_index(int x, int y) {
@@ -72,6 +76,11 @@ void place_element(element *elem) {
     }
 }
 
+double display_get_delta_time() {
+    double delta_time = timer_elapsed(&timer);
+    timer_start(&timer);
+    return delta_time;
+}
 
 void display_update() {
     list_node *node = elements.head;

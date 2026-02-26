@@ -161,6 +161,10 @@ double easeOutBounce( double t ) {
     return 1 - pow( 2, -6 * t ) * abs( cos( t * PI * 3.5 ) );
 }
 
+double easeLinear( double t ) {
+    return t;
+}
+
 double easeInOutBounce( double t ) {
     if( t < 0.5 ) {
         return 8 * pow( 2, 8 * (t - 1) ) * abs( sin( t * PI * 7 ) );
@@ -172,6 +176,7 @@ double easeInOutBounce( double t ) {
 easingFunction getEasingFunction(enum easing_functions function)
 {
 	static easingFunction easingFunctions[] = {
+        easeLinear,
         easeInSine, easeOutSine, easeInOutSine,
         easeInQuad, easeOutQuad, easeInOutQuad,
         easeInCubic, easeOutCubic, easeInOutCubic,

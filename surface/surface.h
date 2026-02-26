@@ -2,6 +2,9 @@
 #define SURFACE_HEADER_FOR_MY_SHIT
 
 #include "../types/types.h"
+#include "../easing/easing.h"
+
+#define ANIMATION_REPEAT (1u << 0)
 
 typedef struct surface
 {
@@ -9,7 +12,7 @@ typedef struct surface
     CHAR_INFO texture[];
 } surface;
 
-size_t surface_get_index(point size, int x, int y);
+#define surface_get_index(sizex, x, y)  ((y) * (sizex) + (x))
 CHAR_INFO surface_get_pixel(const surface *surf, int x, int y);
 int surface_set_pixel(surface *surf, int x, int y, CHAR_INFO value);
 
@@ -23,10 +26,14 @@ void surface_clear(surface *surf);
 surface* string_to_surface_char(const char *str, int attributes);
 surface* string_to_surface_wchar(const WCHAR *str, int attributes);
 
-#define string_to_surface(str, attributes) \
-    _Generic((str), \
-    char: string_to_surface_char \
-    WCHAR: string_to_surface_wchar \
-)(str, attributes)
+
+typedef struct animation {
+    double time;
+    enum easing_functions easing;
+    unsigned char flags;
+    
+    double __time_elapsed;
+    size_t __index;
+} animation;
 
 #endif

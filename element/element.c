@@ -28,8 +28,8 @@ void element_update_style(element *elem) {
 
     elem->__old_style = elem->style;
 
-    if (elem->style.fill_char.Char.UnicodeChar) {
-        surface_fill(elem->style.surf, elem->style.fill_char);
+    if (elem->style.background_char.Char.UnicodeChar) {
+        surface_fill(elem->style.surf, elem->style.background_char);
     }
     if (!border_is_empty(&elem->style.border)) {
         draw_borders(elem->style.surf, elem->style.border);
